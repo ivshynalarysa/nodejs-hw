@@ -51,7 +51,7 @@ app.use((req, res) => {
 // Middleware для обробки помилок
 app.use((err, req, res, next) => {
   console.error('Error:', err.message);
-  const isProd = process.env.NODE_ENV === 'prodaction';
+  const isProd = process.env.NODE_ENV === 'production';
   res.status(500).json({
     message: isProd
     ? 'Internal Server Error' : err.message,
