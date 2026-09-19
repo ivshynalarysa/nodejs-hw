@@ -5,7 +5,7 @@ const noteSchema = new Mongoose.Schema(
   title: {
     type: String,
       required: true,
-      trim: true,
+      trim: true, // прибирає пробіли на початку та в кінці
   },
   content: {
     type: String,
@@ -29,6 +29,7 @@ const noteSchema = new Mongoose.Schema(
       default: "Todo",
     },
     timestamps: true,
+    versionKey: false,
 });
 
 
