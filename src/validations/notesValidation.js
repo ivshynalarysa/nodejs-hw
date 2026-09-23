@@ -15,20 +15,26 @@ export const getAllNotesSchema = {
       integer().
       min(1).
       default(1).
-      required().
+      optional().
       messages({
       "number.base": "Page must be a number",
       "number.min": "Page must be at least {#limit}",
       "number.max": "Page must be at most {#limit}",
       "any.required": "Page is required",
     }),
-    perPage: Joi.number().integer().min(5).max(10).required().messages({
+    perPage: Joi.
+      number().
+      integer().
+      min(5).
+      max(20).
+      default(15).
+      optional().messages({
       "number.base": "PerPage must be a number",
       "number.min": "PerPage must be at least {#limit}",
       "number.max": "PerPage must be at most {#limit}",
       "any.required": "PerPage is required",
     }),
-    tag: Joi.string().valid(...TAGS).required().messages({
+    tag: Joi.string().valid(...TAGS).optional().messages({
       "any.only": "Tag must be one of the allowed values",
       "any.required": "Tag is required",
     }),
@@ -54,7 +60,7 @@ export const createNoteSchema = {
     content: Joi.string().optional().allow('').messages({
       "string.base": "content must be a string",
     }),
-    tag: Joi.string().valid(...TAGS).required().messages({
+    tag: Joi.string().valid(...TAGS).optional().messages({
       "any.only": "Tag must be one of the allowed values",
       "any.required": "Tag is required",
     })
@@ -63,7 +69,14 @@ export const createNoteSchema = {
   };
 
 export const updateNoteSchema = {
+  [Segments.PARAMS]: Joi.object().keys({
+    noteId: Joi.string().
+      custom(objectIdValidator).
+    required(),
+  }),
+
   [Segments.BODY]: Joi.object().keys({
+
     title: Joi.string().min(1).optional().messages({
       "string.base": "title must be a string",
     }),
@@ -72,6 +85,9 @@ export const updateNoteSchema = {
     }),
     tag: Joi.string().valid(...TAGS).optional().messages({
       "any.only": "Tag must be one of the allowed values",
-    })
+    }),
+
+  }).min(1).messages({
+    "object.min": "at least one field (title, content, or tag) must be provided for update",
   })
 };
