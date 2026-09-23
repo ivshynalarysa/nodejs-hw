@@ -27,7 +27,7 @@ export const getAllNotesSchema = {
       integer().
       min(5).
       max(20).
-      default(15).
+      default(10).
       optional().messages({
       "number.base": "PerPage must be a number",
       "number.min": "PerPage must be at least {#limit}",
