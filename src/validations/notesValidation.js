@@ -4,13 +4,19 @@ import { TAGS } from '../constants/tags.js';
 
 // Кастомний валідатор для ObjectId
 const objectIdValidator = (value, helpers) => {
-  return !isValidObjectId(value) ? helpers.message('Invalid id format') : value;
+  return !isValidObjectId(value)
+    ? helpers.message('Invalid id format') : value;
 };
 
 
 export const getAllNotesSchema = {
   [Segments.QUERY]: Joi.object().keys({
-    page: Joi.number().integer().min(1).default(1).required().messages({
+    page: Joi.number().
+      integer().
+      min(1).
+      default(1).
+      required().
+      messages({
       "number.base": "Page must be a number",
       "number.min": "Page must be at least {#limit}",
       "number.max": "Page must be at most {#limit}",
@@ -39,7 +45,7 @@ export const noteIdSchema = {
 };
 
 export const createNoteSchema = {
-  [Segments.Body]: Joi.object().keys({
+  [Segments.BODY]: Joi.object().keys({
     title: Joi.string().min(1).required().messages({
       "string.base": "title must be a string",
       "string.empty": "title cannot be empty",
@@ -52,16 +58,12 @@ export const createNoteSchema = {
       "any.only": "Tag must be one of the allowed values",
       "any.required": "Tag is required",
     })
-  }
-    ).required().messages({
-      "any.only": "Tag must be one of the allowed values",
-      "any.required": "Tag is required",
-    })
-  }
-;
+  })
+
+  };
 
 export const updateNoteSchema = {
-  [Segments.Body]: Joi.object().keys({
+  [Segments.BODY]: Joi.object().keys({
     title: Joi.string().min(1).optional().messages({
       "string.base": "title must be a string",
     }),
