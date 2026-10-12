@@ -15,6 +15,8 @@ import authRouter from './routes/authRoutes.js';
 
 import cookieParser from 'cookie-parser';
 
+import userRouter from './routes/userRoutes.js';
+
 const app = express();
 
 // Використовуємо значення з .env або дефолтний порт 3000
@@ -32,6 +34,9 @@ app.use(authRouter);
 
 // підключаємо групу маршрутів нотаток
 app.use(notesRouter);
+
+// підключаємо групу маршрутів користувачів
+app.use(userRouter);
 
 // Middleware 404 (після всіх маршрутів)
 app.use(notFoundHandler);
