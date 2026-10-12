@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import { sendEmail } from '../utils/sendMail.js';
 import handlebars from 'handlebars';
 import path from 'path';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 export const registerUser = async (req, res) => {
   const { email, password } = req.body;
